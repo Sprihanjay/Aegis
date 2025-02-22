@@ -1,0 +1,44 @@
+LOGO
+Plumbing Co.
+3150 McGavock Pk, Nashville, Tennessee, 37214, US
+(555) 555-5555 | hello@plumbingco.com
+RECIPIENT:
+Nicole Santos
+1 Titans Way
+Nashville, Tennessee 37213
+Invoice #1058
+Issued
+2024-02-19
+Due
+Total
+2024-03-19
+$1,209.10
+For Services Rendered
+PRODUCT/SERVICE
+DESCRIPTION
+QTY.
+UNIT
+TOTAL
+PRICE
+Labor and
+installation
+Days of labor for 2 technicians and
+associated installation costs.
+1
+425.00
+$425.00
+Electric Tankless
+Water Heater 8000W
+Thanks for your business!
+POWERED BY
+JOBBER
+Subtotal
+Tax Rate
+(13%)
+Total
+1
+645.00
+$645.00
+$1,070.00
+$139.10
+$1,209.10
