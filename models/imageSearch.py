@@ -1,10 +1,12 @@
 import requests
 from serpapi import GoogleSearch
+from io import BytesIO
+from PIL import Image
 
 # Set up your SerpAPI key
 SERPAPI_KEY = "your_serpapi_key"  # Replace with your actual API key
 
-def download_first_image(query, save_path="image.jpg"):
+def download_first_image(query):
     params = {
         "q": query,
         "tbm": "isch",  # Image search
@@ -17,14 +19,16 @@ def download_first_image(query, save_path="image.jpg"):
     if "images_results" in results and results["images_results"]:
         image_url = results["images_results"][0]["original"]
         
-        # Download and save the image
+        # Download the image
         img_data = requests.get(image_url).content
-        with open(save_path, "wb") as handler:
-            handler.write(img_data)
+        img = Image.open(BytesIO(img_data))
         
-        print(f"Image downloaded successfully: {save_path}")
+        # print("Image downloaded successfully.")
+        return img
     else:
-        print("No images found.")
+        # print("No images found.")
+        return None
 
 # Example usage
-download_first_image("red toyota corolla")
+# img = download_first_image("red toyota corolla")
+# print(img)

@@ -23,13 +23,13 @@ def is_image_within_timeframe(image_path, incident_date_str):
     max_allowed_date = incident_date + timedelta(days=20)
 
     # Check if image date is within the valid range
-    return incident_date < image_datetime <= max_allowed_date
+    return (incident_date < image_datetime <= max_allowed_date)
 
 # Example usage
-image1 = "metaDataImages/Laptop.JPG"
-incident_date = "2025-02-20"  # Example incident date
+# image1 = "metaDataImages/Laptop.JPG"
+# incident_date = "2025-02-20"  # Example incident date
 
-if is_image_within_timeframe(image1, incident_date):
-    print("The image was taken AFTER the incident and within 20 days.")
-else:
-    print("The image does NOT meet the required timeframe.")
+# if is_image_within_timeframe(image1, incident_date):
+#     print("The image was taken AFTER the incident and within 20 days.")
+# else:
+#     print("The image does NOT meet the required timeframe.")

@@ -3,9 +3,13 @@ import argparse
 from PIL import Image
 
 # Function to compute perceptual hashes for images
-def compute_hashes(image_path, hash_type):
-    # Open image using PIL and convert it to grayscale
-    img = Image.open(image_path).convert('L')
+def compute_hashes(image, hash_type):
+    # Convert image to grayscale if it's a PIL Image object
+    if isinstance(image, Image.Image):
+        img = image.convert('L')
+    else:
+        # Open image using PIL and convert it to grayscale
+        img = Image.open(image).convert('L')
     
     if hash_type == 'phash':
         return imagehash.phash(img)
@@ -26,7 +30,41 @@ def compute_hashes(image_path, hash_type):
 def compare_hashes(hash1, hash2):
     return 1 - (hash1 - hash2) / len(hash1.hash) ** 2
 
-def main():
+def image_sim(image1, image2, hash_options, print_hashes=False):
+    # List of all possible hash types
+    hash_types = []
+    if hash_options.get('phash') or hash_options.get('all'):
+        hash_types.append('phash')
+    if hash_options.get('average') or hash_options.get('all'):
+        hash_types.append('average')
+    if hash_options.get('whash') or hash_options.get('all'):
+        hash_types.append('whash')
+    if hash_options.get('colormoment') or hash_options.get('all'):
+        hash_types.append('colormoment')
+    # if hash_options.get('marrhildreth') or hash_options.get('all'):
+    #     hash_types.append('marrhildreth')
+    # if hash_options.get('radialvariance') or hash_options.get('all'):
+    #     hash_types.append('radialvariance')
+
+    # Compute hashes and compare for each selected hash type
+    for hash_type in hash_types:
+        hash1 = compute_hashes(image1, hash_type)
+        hash2 = compute_hashes(image2, hash_type)
+
+        # Compare similarity
+        similarity = []
+        value = compare_hashes(hash1, hash2)
+        similarity.append(value)
+
+        # print(f"{hash_type}: similarity {similarity:.4f}")
+
+        # # Optionally, print the hash values
+        # if print_hashes:
+        #     print(f"\t{image1} = {hash1}")
+        #     print(f"\t{image2} = {hash2}")
+        return similarity
+
+if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Compute and compare perceptual hashes of two images.")
     parser.add_argument("image1", help="Path to the first image.")
     parser.add_argument("image2", help="Path to the second image.")
@@ -41,44 +79,14 @@ def main():
 
     args = parser.parse_args()
 
-    # Check if at least one hash type is selected
-    if not any([args.phash, args.average, args.whash, args.colormoment, args.marrhildreth, args.radialvariance, args.all]):
-        print("Error: No hash types selected. Use -all or specific hash options.")
-        return
+    hash_options = {
+        'all': args.all,
+        'phash': args.phash,
+        'average': args.average,
+        'whash': args.whash,
+        'colormoment': args.colormoment,
+        'marrhildreth': args.marrhildreth,
+        'radialvariance': args.radialvariance
+    }
 
-    # List of all possible hash types
-    hash_types = []
-    if args.phash or args.all:
-        hash_types.append('phash')
-    if args.average or args.all:
-        hash_types.append('average')
-    if args.whash or args.all:
-        hash_types.append('whash')
-    if args.colormoment or args.all:
-        hash_types.append('colormoment')
-    # if args.marrhildreth or args.all:
-    #     hash_types.append('marrhildreth')
-    # if args.radialvariance or args.all:
-    #     hash_types.append('radialvariance')
-
-    # Load the images
-    img1 = Image.open(args.image1)
-    img2 = Image.open(args.image2)
-
-    # Compute hashes and compare for each selected hash type
-    for hash_type in hash_types:
-        hash1 = compute_hashes(args.image1, hash_type)
-        hash2 = compute_hashes(args.image2, hash_type)
-
-        # Compare similarity
-        similarity = compare_hashes(hash1, hash2)
-
-        print(f"{hash_type}: similarity {similarity:.4f}")
-
-        # Optionally, print the hash values
-        if args.print:
-            print(f"\t{args.image1} = {hash1}")
-            print(f"\t{args.image2} = {hash2}")
-
-if __name__ == "__main__":
-    main()
+    image_sim(args.image1, args.image2, hash_options, args.print)

@@ -1,11 +1,10 @@
 import os
 import io
-import re
 from google.cloud import vision
 import json
 
 # Set the path to your service account JSON key file
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/Users/sprihanjay/Programming/Projects/Aegis/Aegis/backend/models/assurant-451704-ea28859565c4.json"
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "models/assurant-451704-ea28859565c4.json"
 
 def extract_text_from_image(image_path):
     """
@@ -31,18 +30,22 @@ def extract_text_from_image(image_path):
     else:
         return ""
 
-def main():
-    # Replace with the correct path to your invoice image file
-    image_path = 'backend/models/invoiceImages/Plumbing.png'
-    
+def process_invoice_image(image_path):
+    """
+    Processes the invoice image to extract text and return it in a data structure.
+    """
     # Extract text from the invoice image using Google Cloud Vision OCR
     invoice_text = extract_text_from_image(image_path)
     
-    # Save the extracted text to a TXT file
-    with open('backend/models/extracted_invoice_text.txt', 'w') as txt_file:
-        txt_file.write(invoice_text)
+    # Store the extracted text in a dictionary
+    extracted_data = {
+        "invoice_text": invoice_text
+    }
     
-    print("Extracted invoice text has been saved to 'backend/models/extracted_invoice_text.txt'.")
+    return extracted_data
 
-if __name__ == "__main__":
-    main()
+# Example usage
+# if __name__ == "__main__":
+#     image_path = 'models/invoiceImages/Plumbing.png'
+#     extracted_data = process_invoice_image(image_path)
+#     print(extracted_data)

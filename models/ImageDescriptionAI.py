@@ -49,7 +49,7 @@ def generate_contextual_description(labels):
 
 # Example usage:
 if __name__ == '__main__':
-    image_path = 'backend/models/ClaimImages/Claim1.jpeg'
+    image_path = 'models/ClaimImages/Claim1.jpeg'
     ai_labels = get_image_labels(image_path)
     contextual_description = generate_contextual_description(ai_labels)
     print("Contextual Description:", contextual_description)

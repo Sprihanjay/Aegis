@@ -64,18 +64,19 @@ def predict_image_classification_sample(
     response = client.predict(
         endpoint=endpoint, instances=instances, parameters=parameters
     )
-    print("response")
-    print(" deployed_model_id:", response.deployed_model_id)
+    # print("response")
+    # print(" deployed_model_id:", response.deployed_model_id)
     # See gs://google-cloud-aiplatform/schema/predict/prediction/image_classification_1.0.0.yaml for the format of the predictions.
     predictions = response.predictions
     for prediction in predictions:
-        print(" prediction:", dict(prediction))
+        array = dict(prediction)
+    return array
 
 
-predict_image_classification_sample(
-    project=project,
-    endpoint_id=endpoint_id,
-    location="us-central1",
-    filename="models/test/fake_test/image_fx_-16.jpg"
-)
+# print(predict_image_classification_sample(
+#     project=project,
+#     endpoint_id=endpoint_id,
+#     location="us-central1",
+#     filename="models/test/fake_test/image_fx_-16.jpg"
+# ))
 # [END aiplatform_predict_image_classification_sample]
