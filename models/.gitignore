@@ -1,4 +1,5 @@
 # backend/models/.gitignore
 .env.local
+.env
 assurant-451704-ea28859565c4.json
 assurant-451704-firebase-adminsdk-fbsvc-ff4330598f.jsonx
