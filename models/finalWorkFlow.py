@@ -44,23 +44,26 @@ def real_vs_fake_claim(image_path):
     result = result if result else "human"
     return result[0]
 
-def reverse_image_search_similarity(image_path,text_description):
+def reverse_image_search_similarity(image_path, text_description):
     downloaded_image = download_first_image(text_description)
     hash_options = {'phash': True}
-    similarity_results_1 = image_sim(image_path, downloaded_image, hash_options, print_hashes=True)
+    similarity_results_1 = image_sim(image_path, downloaded_image, hash_options, print_hashes=True)[0]
     hash_options = {'average': True}
-    similarity_results_2 = image_sim(downloaded_image, image_path, hash_options, print_hashes=True)
+    similarity_results_2 = image_sim(downloaded_image, image_path, hash_options, print_hashes=True)[0]
     hash_options = {'whash': True}
-    similarity_results_3 = image_sim(downloaded_image, image_path, hash_options, print_hashes=True)
+    similarity_results_3 = image_sim(downloaded_image, image_path, hash_options, print_hashes=True)[0]
     hash_options = {'colormoment': True}
-    similarity_results_4 = image_sim(downloaded_image, image_path, hash_options, print_hashes=True)
-    if similarity_results_1 > 0.6 or similarity_results_2 > 0.6 or similarity_results_3 > 0.6 or similarity_results_4 > 0.9:
+    similarity_results_4 = image_sim(downloaded_image, image_path, hash_options, print_hashes=True)[0]
+    if similarity_results_1 > 0.6 and similarity_results_2 > 0.6 and similarity_results_3 > 0.6 and similarity_results_4 > 0.9:
         return True
     return False
     
 
 if __name__ == "__main__":
-   print(reverse_image_search_similarity("models/test/real_test/Toyota.jpg","red toyota corolla"))
-    
+    # print(metadata_process("models/test/real_test/Toyota.jpg", "2022-02-01"))
+    # print(real_vs_fake_claim("models/test/fake_test/image_fx_-16.jpg"))
+    # print(invoice_process("models/invoiceImages/Plumbing.png", "1209", "Nicole Santos"))
+    # print(reverse_image_search_similarity("models/test/real_test/Toyota.jpg","red toyota corolla"))
+
 
 
